@@ -1,44 +1,55 @@
 package Interfaz;
 
+import Graficos.Imagen;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Viewer extends Canvas {
-    private BufferedImage originalImage;
-    private BufferedImage image1;
-    private BufferedImage image2;
-    private BufferedImage image3;
+    private Imagen originalImage;
+    private Imagen image1;
+    private Imagen image2;
+    private Imagen image3;
+    private Imagen currentImage = null;
 
-    public BufferedImage getOriginalImage() {
+    public Imagen getOriginalImage() {
         return originalImage;
     }
 
-    public void setOriginalImage(BufferedImage originalImage) {
+    public void setOriginalImage(Imagen originalImage) {
         this.originalImage = originalImage;
     }
 
-    public BufferedImage getImage1() {
+    public Imagen getImage1() {
         return image1;
     }
 
-    public void setImage1(BufferedImage image1) {
+    public void setImage1(Imagen image1) {
         this.image1 = image1;
     }
 
-    public BufferedImage getImage2() {
+    public Imagen getImage2() {
         return image2;
     }
 
-    public void setImage2(BufferedImage image2) {
+    public void setImage2(Imagen image2) {
         this.image2 = image2;
     }
 
-    public BufferedImage getImage3() {
+    public Imagen getImage3() {
         return image3;
     }
 
-    public void setImage3(BufferedImage image3) {
+    public void setImage3(Imagen image3) {
         this.image3 = image3;
+    }
+
+    public Imagen getCurrentImage() {
+        return currentImage;
+    }
+
+    public void setCurrentImage(Imagen currentImage) {
+        this.currentImage = currentImage;
     }
 
     public Viewer(){
@@ -58,10 +69,10 @@ public class Viewer extends Canvas {
         int alto = this.getHeight()/2;
 
         if(this.getOriginalImage()!=null){
-            g.drawImage(getOriginalImage(),0,0,ancho,alto,this);
-            g.drawImage(getImage1(),ancho,0,ancho,alto,this);
-            g.drawImage(getImage2(),0,alto,ancho,alto,this);
-            g.drawImage(getImage3(),ancho,alto,ancho,alto,this);
+            g.drawImage(getOriginalImage().getImagen(),0,0,ancho,alto,this);
+            g.drawImage(getImage1().getImagen(),ancho,0,ancho,alto,this);
+            g.drawImage(getImage2().getImagen(),0,alto,ancho,alto,this);
+            g.drawImage(getImage3().getImagen(),ancho,alto,ancho,alto,this);
         }
     }
 }

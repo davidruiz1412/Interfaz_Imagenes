@@ -2,6 +2,8 @@ package Interfaz;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 
 
-public class ControlPanel extends JPanel implements ActionListener{
+public class ControlPanel extends JPanel implements ActionListener, ChangeListener {
     private JButton fileButton;
     private Viewer viewer;
     private JButton image1;
@@ -202,6 +204,10 @@ public class ControlPanel extends JPanel implements ActionListener{
         this.image1 = new JButton("Imagen 1");
         this.image2 = new JButton("Imagen 2");
         this.image3 = new JButton("Imagen 3");
+        image1.addActionListener(this);
+        image2.addActionListener(this);
+        image3.addActionListener(this);
+
 
         gbc.gridx=0;
         gbc.gridy=1;
@@ -480,12 +486,41 @@ public class ControlPanel extends JPanel implements ActionListener{
                 String path = fileDialog.getDirectory() + fileDialog.getFile();
                 File file = new File(path);
                 try {
-                    viewer.setOriginalImage(ImageIO.read(file));
+                    viewer.getOriginalImage().setImagen(ImageIO.read(file));
                 } catch (Exception exc) {
 
                 }
                 viewer.copyImages();
                 break;
+            case "Imagen 1":
+                viewer.setCurrentImage(viewer.getImage1());
+                break;
+            case "Imagen 2":
+                viewer.setCurrentImage(viewer.getImage2());
+                break;
+            case "Imagen 3":
+                viewer.setCurrentImage(viewer.getImage3());
+                break;
         }
     }
+
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        Viewer viewer = getViewer();
+
+        if(e.getSource().equals(getSliderBrillo())){
+            viewer.getCurrentImage().setPorcentajeBrilloTotal(getSliderBrillo().getValue());
+            viewer.getCurrentImage().modificarImagen(viewer.getOriginalImage());
+        }else if(e.getSource().equals(getSliderRed())){
+            viewer.getCurrentImage().setPorcentajeCanalRojo(getSliderRed().getValue());
+            viewer.getCurrentImage().modificarImagen(viewer.getOriginalImage());
+        }else if(e.getSource().equals(getSliderGreen())){
+            viewer.getCurrentImage().setPorcentajeCanalVerde(getSliderGreen().getValue());
+            viewer.getCurrentImage().modificarImagen(viewer.getOriginalImage());
+        }else if(e.getSource().equals(getSliderBlue())){
+            viewer.getCurrentImage().setPorcentajeCanalAzul(getSliderBlue().getValue());
+            viewer.getCurrentImage().modificarImagen(viewer.getOriginalImage());
+        }
+    }
+
 }
