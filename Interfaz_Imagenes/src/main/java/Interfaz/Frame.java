@@ -14,9 +14,9 @@ public class Frame extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-
-        controlPanel = new ControlPanel();
         viewer = new Viewer();
+        controlPanel = new ControlPanel(viewer);
+
 
         gbc.gridx=0;
         gbc.gridy=0;

@@ -1,9 +1,13 @@
 package Interfaz;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 
 public class ControlPanel extends JPanel implements ActionListener{
@@ -155,8 +159,9 @@ public class ControlPanel extends JPanel implements ActionListener{
         this.gbc = gbc;
     }
 
-    public ControlPanel(){
+    public ControlPanel(Viewer viewer){
         super();
+        this.setViewer(viewer);
         this.setBackground(Color.lightGray);
         this.setLayout(new GridBagLayout());
         addFileButton();
@@ -467,12 +472,19 @@ public class ControlPanel extends JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         Viewer viewer = getViewer();
+
         switch (e.getActionCommand()){
             case "Inserte archivo:":
-                System.out.println("Estoy dentro");
                 FileDialog fileDialog = new FileDialog(new JFrame(),"pilla una foto", FileDialog.LOAD);
                 fileDialog.setVisible(true);
-                String path =fileDialog.getDirectory()+ fileDialog.getFile();
+                String path = fileDialog.getDirectory() + fileDialog.getFile();
+                File file = new File(path);
+                try {
+                    viewer.setOriginalImage(ImageIO.read(file));
+                } catch (Exception exc) {
+
+                }
+                viewer.copyImages();
                 break;
         }
     }

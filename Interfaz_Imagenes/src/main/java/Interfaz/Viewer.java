@@ -45,7 +45,23 @@ public class Viewer extends Canvas {
 
     }
 
-    public void pintarImagenes(BufferedImage imagen){
-        ;
+    public void copyImages(){
+        this.setImage1(this.getOriginalImage());
+        this.setImage2(this.getOriginalImage());
+        this.setImage3(this.getOriginalImage());
+    }
+
+
+    @Override
+    public void paint(Graphics g) {
+        int ancho = this.getWidth()/2;
+        int alto = this.getHeight()/2;
+
+        if(this.getOriginalImage()!=null){
+            g.drawImage(getOriginalImage(),0,0,ancho,alto,this);
+            g.drawImage(getImage1(),ancho,0,ancho,alto,this);
+            g.drawImage(getImage2(),0,alto,ancho,alto,this);
+            g.drawImage(getImage3(),ancho,alto,ancho,alto,this);
+        }
     }
 }
